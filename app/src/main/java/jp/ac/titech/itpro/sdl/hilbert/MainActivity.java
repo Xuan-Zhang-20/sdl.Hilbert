@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final static int MAX_ORDER = 9;
     private int order = 1;
+    private final static String CURRENT="MainActivity.order";
 
     private TextView orderView;
     private HilbertView hilbertView;
@@ -21,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(savedInstanceState != null)
+            order=savedInstanceState.getInt(CURRENT);
 
         orderView = findViewById(R.id.order_view);
         hilbertView = findViewById(R.id.hilbert_view);
@@ -56,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
         hilbertView.setOrder(order);
         decButton.setEnabled(order > 1);
         incButton.setEnabled(order < MAX_ORDER);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(CURRENT, order);
     }
 
     public static void assertTrue(boolean f, String message) {
